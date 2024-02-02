@@ -5,8 +5,6 @@
         <div class="container d-flex justify-content-center">
             <a href="#category" class="btn  btn-sm">Категории</a>
             <a href="#tovars" class="btn  btn-sm">Товары</a>
-            <a href="#barista" class="btn  btn-sm">Панель баристы</a>
-
         </div>
 
         {{-- категории --}}
@@ -50,7 +48,7 @@
 
         {{-- товары --}}
         <h3 class="h3" id="tovars">Товары</h3>
-        <button type="submit" class="btn btn-dark pd-3">Создать товар</button>
+        <button type="submit" class="btn btn-dark m-4">Создать товар</button>
         <h5 id="coffee" class="pd-3">Кофейные напитки</h5>
 
         <div class="container-border1 container d-flex justify-content-around flex-wrap">
@@ -254,51 +252,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-        {{-- панель баристы --}}
-        <h3 class="h3" id="barista">Панель баристы</h3>
-        <h5 id="coffee" class="pd-3">Активные заказы</h5>
-        <div class="container d-flex justify-content-between">
-
-            <div class="container1 d-flex">
-                <div class="card" style="width: 20rem;">
-                    <div class="card-body">
-
-                        <ul>
-                            <li>
-                                <p>
-                                <h5 class="card-title">Заказ № 1</h5>
-                                </p>
-                            </li>
-                            <li>
-                                <p> Латте на кокосовом - 130 ₽</p>
-                            </li>
-                            <li>
-                                <p> Классический тирамису - 100 ₽</p>
-                            </li>
-                            <li>
-                                <p> Общая сумма: 230 ₽</p>
-                            </li>
-                            <li>
-                                <p> Имя заказчика: Илюшенька</p>
-                            </li>
-
-                            <a href="#" class="card-link">Открыть рецепт</a>
-
-                            {{-- модалка, предлагаю просто подряд все рецепты кофе выводить, похуй --}}
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-
 
         <footer>
             <ul>
