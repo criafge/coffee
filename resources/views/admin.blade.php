@@ -13,16 +13,16 @@
 
             <div class="container1 d-flex">
                 @foreach ($categories as $item)
-                <div class="card" style="width: 20rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{$item->title}}</h5>
-                        <form action="{{route('categories.destroy', $item->id)}}" method="post">
-                            @csrf
-                            @method('delete')
-                            <input type="submit" value="Удалить" class="btn btn-success">
-                        </form>
+                    <div class="card" style="width: 20rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $item->title }}</h5>
+                            <form action="{{ route('categories.destroy', $item->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <input type="submit" value="Удалить" class="btn btn-success">
+                            </form>
+                        </div>
                     </div>
-                </div>
                 @endforeach
             </div>
             <div class="container2">
@@ -45,7 +45,11 @@
 
         {{-- товары --}}
         <h3 class="h3" id="tovars">Товары</h3>
-        <button type="submit" class="btn btn-dark m-4">Создать товар</button>
+
+        <button type="button" class="btn btn-dark m-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Создать товар
+        </button>
+
         <h5 id="coffee" class="pd-3">Кофейные напитки</h5>
 
         <div class="container-border1 container d-flex justify-content-around flex-wrap">
@@ -106,8 +110,8 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" value="Турецкий капучино с апельсином">
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                value="Турецкий капучино с апельсином">
                         </div>
                     </h5>
                     <p class="card-text">
@@ -315,4 +319,75 @@
             padding: 30px;
         }
     </style>
+
+
+
+    <!-- Modal создание товара -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('categories.store') }}" method="post">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Создание товара</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Название товара</label>
+                            <input type="text" class="form-control" name="title">
+                            @error('title')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Описание товара</label>
+                            <input type="text" class="form-control" name="title">
+                            @error('title')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Рецепт товара</label>
+                            <input type="text" class="form-control" name="title">
+                            @error('title')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Цена товара</label>
+                            <input type="text" class="form-control" name="title">
+                            @error('title')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Категория товара</label>
+                            <select name="category_id" class="form-select" aria-label="Default select example">
+                                @foreach ($categories as $item)
+                                <option value="{{$item->id}}">{{$item->title}}</option>
+                                @endforeach
+                            </select>
+                             @error('title')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-success">Сохранить</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 @endsection

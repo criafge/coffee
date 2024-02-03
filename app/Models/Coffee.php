@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coffee extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        "title",
+        "description",
+        "cost",
+        "category_id",
+        "recept",
+    ];
 }
