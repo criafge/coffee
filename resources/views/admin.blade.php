@@ -12,34 +12,31 @@
         <div class="container d-flex justify-content-between">
 
             <div class="container1 d-flex">
+                @foreach ($categories as $item)
                 <div class="card" style="width: 20rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Кофейные напитки</h5>
-                        <a href="#" class="card-link">Удалить</a>
+                        <h5 class="card-title">{{$item->title}}</h5>
+                        <form action="{{route('categories.destroy', $item->id)}}" method="post">
+                            @csrf
+                            @method('delete')
+                            <input type="submit" value="Удалить" class="btn btn-success">
+                        </form>
                     </div>
                 </div>
-
-                <div class="card" style="width: 20rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Печенья и сладости</h5>
-                        <a href="#" class="card-link">Удалить</a>
-                    </div>
-                </div>
-
-                <div class="card" style="width: 20rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Молотый и зерновой кофе</h5>
-                        <a href="#" class="card-link">Удалить</a>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="container2">
-                <form>
+                <form action="{{ route('categories.store') }}" method="post">
                     @csrf
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Название категории</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label for="title" class="form-label">Название категории</label>
+                        <input type="text" class="form-control" name="title">
+
                     </div>
+                    @error('title')
+                        <div class="alert alert-danger" role="alert">
+                            {{ $message }}</div>
+                    @enderror
                     <button type="submit" class="btn btn-dark">Создать катeгорию</button>
                 </form>
             </div>

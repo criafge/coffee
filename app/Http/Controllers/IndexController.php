@@ -18,7 +18,7 @@ class IndexController extends Controller
         return view('cabinet');
     }
 
-    public function admin(){
-        return view('admin');
-    }
+    // public function admin(){
+    //     return view('admin');
+    // }
 }

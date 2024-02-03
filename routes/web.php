@@ -10,7 +10,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware'=> 'auth'], function () {
     Route::group(['namespace'=> 'App\Http\Controllers\admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {
-        Route::get('/', [IndexController::class])->name('admin');
+        Route::get('/', App\Http\Controllers\admin\IndexController::class)->name('admin');
         Route::resource('categories', App\Http\Controllers\admin\CategoryController::class)->only('store', 'destroy');
     });
 });
@@ -22,4 +22,3 @@ Route::get('trash', [IndexController::class, 'trash'])->name('trash');
 
 Route::get('kabinet', [IndexController::class, 'kabinet'])->name('kabinet');
 
-Route::get('admin', [IndexController::class, 'admin'])->name('admin');

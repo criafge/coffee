@@ -22,7 +22,14 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|',
+            'title' => 'required|regex:/[А-Яа-яЁё]/u',
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'title.required'=> 'Пусто, как в моей душе',
+            'title.regex' => 'Мы вообще-то в России живем',
         ];
     }
 }
