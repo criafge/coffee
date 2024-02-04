@@ -15,7 +15,9 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request, Category $category)
     {
-        $category->create($request->all());
+        $category->create([
+            'title' => $request->title_category
+        ]);
         return redirect()->back()->with("success");
     }
     /**

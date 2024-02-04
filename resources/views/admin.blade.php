@@ -29,11 +29,11 @@
                 <form action="{{ route('categories.store') }}" method="post">
                     @csrf
                     <div class="mb-3">
-                        <label for="title" class="form-label">Название категории</label>
-                        <input type="text" class="form-control" name="title">
+                        <label for="title_category" class="form-label">Название категории</label>
+                        <input type="text" class="form-control" name="title_category">
 
                     </div>
-                    @error('title')
+                    @error('title_category')
                         <div class="alert alert-danger" role="alert">
                             {{ $message }}</div>
                     @enderror
@@ -326,14 +326,13 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('categories.store') }}" method="post">
-
+                <form action="{{ route('coffees.store') }}" method="post">
+                    @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Создание товара</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        @csrf
                         <div class="mb-3">
                             <label for="title" class="form-label">Название товара</label>
                             <input type="text" class="form-control" name="title">
@@ -343,38 +342,38 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="title" class="form-label">Описание товара</label>
-                            <input type="text" class="form-control" name="title">
-                            @error('title')
+                            <label for="description" class="form-label">Описание товара</label>
+                            <textarea class="form-control" name="description"></textarea>
+                            @error('description')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="title" class="form-label">Рецепт товара</label>
-                            <input type="text" class="form-control" name="title">
-                            @error('title')
+                            <label for="recept" class="form-label">Рецепт товара</label>
+                            <textarea class="form-control" name="recept"></textarea>
+                            @error('recept')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="title" class="form-label">Цена товара</label>
-                            <input type="text" class="form-control" name="title">
-                            @error('title')
+                            <label for="cost" class="form-label">Цена товара</label>
+                            <input type="text" class="form-control" name="cost">
+                            @error('cost')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="title" class="form-label">Категория товара</label>
+                            <label for="category_id" class="form-label">Категория товара</label>
                             <select name="category_id" class="form-select" aria-label="Default select example">
                                 @foreach ($categories as $item)
                                 <option value="{{$item->id}}">{{$item->title}}</option>
                                 @endforeach
                             </select>
-                             @error('title')
+                             @error('category_id')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}</div>
                             @enderror
@@ -383,7 +382,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        <button type="button" class="btn btn-success">Сохранить</button>
+                        <button type="submit" class="btn btn-success">Сохранить</button>
                     </div>
                 </form>
 

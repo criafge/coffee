@@ -12,7 +12,7 @@ Route::group(['middleware'=> 'auth'], function () {
     Route::group(['namespace'=> 'App\Http\Controllers\admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('/', App\Http\Controllers\admin\IndexController::class)->name('admin');
         Route::resource('categories', App\Http\Controllers\admin\CategoryController::class)->only('store', 'destroy');
-        Route::resource('categories', App\Http\Controllers\admin\CoffeeController::class)->only('store', 'update', 'destroy');
+        Route::resource('coffees', App\Http\Controllers\admin\CoffeeController::class)->only('store', 'update', 'destroy');
     });
 });
 

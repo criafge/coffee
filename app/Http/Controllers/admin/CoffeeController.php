@@ -17,7 +17,7 @@ class CoffeeController extends Controller
     public function store(StoreCoffeeRequest $request, Coffee $coffee)
     {
         $coffee->create($request->all());
-        return redirect()->back()->with("success");
+        return redirect()->back()->with("success", "Сохранено успешно");
     }
 
     /**
@@ -25,14 +25,15 @@ class CoffeeController extends Controller
      */
     public function update(UpdateCoffeeRequest $request, Coffee $coffee)
     {
-        return redirect()->back()->with("success". "Обновлено успешно");
+        return redirect()->back()->with("success", "Обновлено успешно");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Coffee $coffee)
     {
+        $coffee->delete();
         return redirect()->back()->with("success", "Удалено успешно");
     }
 }
