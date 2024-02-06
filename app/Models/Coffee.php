@@ -13,5 +13,6 @@ class Coffee extends Model
         "cost",
         "category_id",
         "recept",
+        "photo",
     ];
 }

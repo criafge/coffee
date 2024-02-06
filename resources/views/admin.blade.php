@@ -30,7 +30,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="title_category" class="form-label">Название категории</label>
-                        <input type="text" class="form-control" name="title_category">
+                        <input type="text" class="form-control focus-ring focus-ring-success" name="title_category">
 
                     </div>
                     @error('title_category')
@@ -50,209 +50,110 @@
             Создать товар
         </button>
 
-        <h5 id="coffee" class="pd-3">Кофейные напитки</h5>
+        {{-- <h5 id="coffee" class="pd-3">Кофейные напитки</h5> --}}
 
+        <form action="{{ route('admin') }}" method="get" class="w-25 pd-3 d-flex gap-3">
+            @csrf
+            <select class="form-select" name="category">
+                <option value="">Все</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->title }}</option>
+                @endforeach
+            </select>
+            <input type="submit" class="btn btn-success" value="Поиск">
+        </form>
         <div class="container-border1 container d-flex justify-content-around flex-wrap">
-            {{-- латте на кокосовом --}}
-            <div class="card" style="width: 18rem;">
-                <div class="container_img">
-                    <img src="img/coffee1.png" class="card-img-top" alt="coffee1">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                value="Латте на кокосовом молоке">
-                        </div>
-                    </h5>
-                    <p class="card-text">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            value="Приготовленный на основе кокосового молока, этот латте предлагает
-                                уникальное сочетание гармонии кофе и нежности кокосового вкуса.">
+            @foreach ($coffees as $item)
+                <div class="card" style="width: 18rem;">
+                    <div class="container_img">
+                        <img src="{{ Storage::url($item->photo) }}" class="card-img-top" alt="{{ $item->photo }}">
                     </div>
-                    </p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> Категория
-                        <select class="form-select" aria-label="Пример выбора по умолчанию">
-                            <option selected>Кофейные напитки</option>
-                            <option value="1">Печенье и сладости</option>
-                            <option value="2">Молотый и зерновой кофе</option>
-                        </select>
-                    </li>
-                    <li class="list-group-item">Заказов: 364</li>
-                    <li class="list-group-item">
-                        <div class="mb-3"> Цена
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                value="130">
-                        </div>
-                    </li>
-
-                    <li class="list-group-item">
-                        <div class="mb-3">
-                            <input type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
-                    </li>
-
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Удалить</a>
-                    <a href="#" class="card-link">Сохранить изменения</a>
-                </div>
-            </div>
-
-            {{-- турецкий капучино с апельсином --}}
-            <div class="card" style="width: 18rem;">
-                <div class="container_img">
-                    <img src="img/coffee2.png" class="card-img-top" alt="coffee1">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                value="Турецкий капучино с апельсином">
-                        </div>
-                    </h5>
-                    <p class="card-text">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            value="Турецкий капучино с апельсином - это необычное сочетание
-                            восточной экзотики и богатства вкусов, создавая удовольствие для всех,
-                            кто желает насладиться чем-то утонченным и оригинальным в мире кофейных напитков">
+                    <div class="card-body">
+                        <form action="{{ route('coffees.update', $item->id) }}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('patch')
+                            <h5 class="card-title">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" name="title" value="{{ $item->title }}">
+                                </div>
+                                @error('title')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}</div>
+                                @enderror
+                            </h5>
+                            <p class="card-text">
+                            <div class="mb-3">
+                                <textarea type="text" class="form-control" name="description">{{ $item->description }}</textarea>
+                                @error('descriptions')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}</div>
+                                @enderror
+                            </div>
+                            </p>
+                            <p class="card-text">
+                            <div class="mb-3">
+                                <textarea type="text" class="form-control" name="recept">{{ $item->recept }}</textarea>
+                                @error('recept')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}</div>
+                                @enderror
+                            </div>
+                            </p>
                     </div>
-                    </p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> Категория
-                        <select class="form-select" aria-label="Пример выбора по умолчанию">
-                            <option selected>Кофейные напитки</option>
-                            <option value="1">Печенье и сладости</option>
-                            <option value="2">Молотый и зерновой кофе</option>
-                        </select>
-                    </li>
-                    <li class="list-group-item">Заказов: 364</li>
-                    <li class="list-group-item">
-                        <div class="mb-3"> Цена
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" value="130">
-                        </div>
-                    </li>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> Категория
+                            <select class="form-select" name="category_id">
+                                @foreach ($categories as $category)
+                                    @if ($category->id == $item->category_id)
+                                        <option selected value="{{ $category->id }}">{{ $category->title }}</option>
+                                    @else
+                                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </li>
+                        <li class="list-group-item">
+                            <div class="mb-3"> Цена
+                                <input type="text" class="form-control" name="cost" value="{{ $item->cost }}">
+                            </div>
+                            @error('cost')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </li>
 
-                    <li class="list-group-item">
-                        <div class="mb-3">
-                            <input type="file" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
-                        </div>
-                    </li>
+                        <li class="list-group-item">
+                            <div class="mb-3">
+                                <input type="file" class="form-control" name="photo">
+                            </div>
+                            @error('photo')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </li>
 
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Удалить</a>
-                    <a href="#" class="card-link">Сохранить изменения</a>
-                </div>
-            </div>
+                    </ul>
+                    <input class="btn" type="submit" value="Сохранить">
+                    </form>
 
-            {{-- холоный раф с корицей --}}
-            <div class="card" style="width: 18rem;">
-                <div class="container_img">
-                    <img src="img/coffee3.png" class="card-img-top" alt="coffee1">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" value="Холодный раф с корицей">
-                        </div>
-                    </h5>
-                    <p class="card-text">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            value="Ледяной раф с корицей - это не только возможность ощутить
-                            насыщенность кофейного вкуса, но и насладиться утонченным ароматом пряных специй.">
+                    <div class="card-body d-flex justify-content-center">
+                        <form action="{{ route('coffees.destroy', $item->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <input type="submit" class="btn btn-danger" value="Удалить">
+                        </form>
                     </div>
-                    </p>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> Категория
-                        <select class="form-select" aria-label="Пример выбора по умолчанию">
-                            <option selected>Кофейные напитки</option>
-                            <option value="1">Печенье и сладости</option>
-                            <option value="2">Молотый и зерновой кофе</option>
-                        </select>
-                    </li>
-                    <li class="list-group-item">Заказов: 364</li>
-                    <li class="list-group-item">
-                        <div class="mb-3"> Цена
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" value="130">
-                        </div>
-                    </li>
+            @endforeach
 
-                    <li class="list-group-item">
-                        <div class="mb-3">
-                            <input type="file" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
-                        </div>
-                    </li>
-
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Удалить</a>
-                    <a href="#" class="card-link">Сохранить изменения</a>
-                </div>
-            </div>
-
-            {{-- латте с клубникой --}}
-            <div class="card" style="width: 18rem;">
-                <div class="container_img">
-                    <img src="img/coffee4.png" class="card-img-top" alt="coffee1">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" value="Латте с клубникой">
-                        </div>
-                    </h5>
-                    <p class="card-text">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            value="Этот напиток переносит вас в мир изысканных вкусов,
-                            где кисло-сладкая нота ягод великолепно сочетается с глубоким и насыщенным вкусом кофе.">
-                    </div>
-                    </p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> Категория
-                        <select class="form-select" aria-label="Пример выбора по умолчанию">
-                            <option selected>Кофейные напитки</option>
-                            <option value="1">Печенье и сладости</option>
-                            <option value="2">Молотый и зерновой кофе</option>
-                        </select>
-                    </li>
-                    <li class="list-group-item">Заказов: 364</li>
-                    <li class="list-group-item">
-                        <div class="mb-3"> Цена
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" value="130">
-                        </div>
-                    </li>
-
-                    <li class="list-group-item">
-                        <div class="mb-3">
-                            <input type="file" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
-                        </div>
-                    </li>
-
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Удалить</a>
-                    <a href="#" class="card-link">Сохранить изменения</a>
-                </div>
-            </div>
         </div>
+        {{ $coffees->withQueryString()->links('pagination::bootstrap-5') }}
 
         <footer>
             <ul>
@@ -318,6 +219,8 @@
         .pd-3 {
             padding: 30px;
         }
+
+        input:hover {}
     </style>
 
 
@@ -326,7 +229,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('coffees.store') }}" method="post">
+                <form action="{{ route('coffees.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Создание товара</h5>
@@ -334,46 +237,57 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="title" class="form-label">Название товара</label>
-                            <input type="text" class="form-control" name="title">
-                            @error('title')
+                            <label for="title_create" class="form-label ">Название товара</label>
+                            <input type="text" class="form-control focus-ring focus-ring-success" name="title_create">
+                            @error('title_create')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Описание товара</label>
-                            <textarea class="form-control" name="description"></textarea>
-                            @error('description')
+                            <label for="description_create" class="form-label">Описание товара</label>
+                            <textarea class="form-control focus-ring focus-ring-success" name="description_create"></textarea>
+                            @error('description_create')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="recept" class="form-label">Рецепт товара</label>
-                            <textarea class="form-control" name="recept"></textarea>
-                            @error('recept')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="cost" class="form-label">Цена товара</label>
-                            <input type="text" class="form-control" name="cost">
-                            @error('cost')
+                            <label for="recept_create" class="form-label">Рецепт товара</label>
+                            <textarea class="form-control focus-ring focus-ring-success" name="recept_create"></textarea>
+                            @error('recept_create')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="category_id" class="form-label">Категория товара</label>
-                            <select name="category_id" class="form-select" aria-label="Default select example">
+                            <label for="photo_create" class="form-label">Добавить фото</label>
+                            <input type="file" class="form-control focus-ring focus-ring-success" name="photo_create"
+                                id="photo">
+                            @error('photo_create')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="cost_create" class="form-label">Цена товара</label>
+                            <input type="text" class="form-control focus-ring focus-ring-success" name="cost_create">
+                            @error('cost_create')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category_id_create" class="form-label">Категория товара</label>
+                            <select name="category_id_create" class="form-select focus-ring focus-ring-success">
+                                <option value="" selected>Выберите категорию</option>
                                 @foreach ($categories as $item)
-                                <option value="{{$item->id}}">{{$item->title}}</option>
+                                    <option value="{{ $item->id }}">{{ $item->title }}</option>
                                 @endforeach
                             </select>
-                             @error('category_id')
+                            @error('category_id_create')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}</div>
                             @enderror
@@ -385,7 +299,6 @@
                         <button type="submit" class="btn btn-success">Сохранить</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
