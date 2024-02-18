@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
     public function __invoke(Request $request, Category $category)
     {
         return view("admin", ['categories' => $category->all()]);
