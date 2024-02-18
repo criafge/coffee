@@ -7,11 +7,16 @@
             <a href="#cookie" class="btn  btn-sm">Печенья и сладости</a>
             <a href="#pack" class="btn  btn-sm">Молотый и зерновой кофе</a>
         </div>
+        @foreach ($data as $category => $item)
+            <h1>
+                {{ $category }}
+            </h1>
+            
+        @endforeach
 
 
-
-        <h3 class="h3" id="coffee">Кофейные напитки</h3>
         <div class="container-border1 container d-flex justify-content-around flex-wrap">
+
             {{-- латте на кокосовом --}}
             <div class="card" style="width: 18rem;">
                 <div class="container_img">
@@ -216,7 +221,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Малиновый кекс с изюмом</h5>
                     <p class="card-text">
-                        При каждом кусочке этого кекса вы ощутите взрыв вкусов 
+                        При каждом кусочке этого кекса вы ощутите взрыв вкусов
                         и насладитесь сочными текстурами фруктов.
                     </p>
                 </div>

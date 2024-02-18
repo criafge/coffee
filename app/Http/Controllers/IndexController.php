@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coffee;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
     public function index(){
-        return view('index');
+        $coffee = Coffee::all();
+        $data = [];
+        foreach($coffee as $item){
+            $data[$item->category->title] = $item;
+        }
+        return view('index', ['data' => $data]);
+
     }
 
     public function trash(){
@@ -18,7 +25,4 @@ class IndexController extends Controller
         return view('cabinet');
     }
 
-    // public function admin(){
-    //     return view('admin');
-    // }
 }

@@ -13,5 +13,10 @@ class Coffee extends Model
         "cost",
         "category_id",
         "recept",
+        "photo",
     ];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

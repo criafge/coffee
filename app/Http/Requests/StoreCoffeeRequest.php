@@ -11,7 +11,7 @@ class StoreCoffeeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,25 +22,26 @@ class StoreCoffeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|regex:/[А-Яа-яЁё]/u',
-            'description' => 'required',
-            'cost' => 'required|numeric|min:0',
-            'category_id' => 'required',
-            'recept' => 'required',
+            'title_create' => 'required|regex:/[А-Яа-яЁё]/u',
+            'description_create' => 'required',
+            'cost_create' => 'required|numeric|min:0',
+            'category_id_create' => 'required',
+            'photo_create' => 'required|extensions:jpg,png,jpeg',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'title.required'=> 'Пусто, как в моей душе',
-            'title.regex' => 'Мы вообще-то в России живем',
-            'description.required' => 'А че, покупать и надеяться на бога?',
-            'cost.required' => 'Ну сколько-то заплатить надо',
-            'cost.numeric' => 'Боюсь ты запутаешься в склонении чисел',
-            'cost.min' => 'Тебе что ли заплатить должны?',
-            'category_id.required' => 'Просто выбери.',
-            'recept.required' => 'Ну а как бариста работать должен?',
+            'title_create.required'=> 'Пусто, как в моей душе🐵',
+            'title_create.regex' => 'Мы вообще-то в России живем🤨',
+            'description_create.required' => 'А че, покупать и надеяться на бога?🤬',
+            'cost_create.required' => 'Ну сколько-то заплатить надо🥵',
+            'cost_create.numeric' => 'Боюсь ты запутаешься в склонении чисел💀',
+            'cost_create.min' => 'Тебе что ли заплатить должны?💲',
+            'category_id_create.required' => 'Просто выбери.😠',
+            'photo_create.required' => 'На слово верить?🥺',
+            'photo_create.extensions' => 'Ты че дурак?🤡',
         ];
     }
 }
