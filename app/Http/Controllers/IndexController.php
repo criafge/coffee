@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Coffee;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
     public function index(){
-        $coffee = Coffee::all();
+        $categories = Category::all();
         $data = [];
-        foreach($coffee as $item){
-            $data[$item->category->title] = $item;
+        foreach($categories as $item){
+            $data[$item->title] = $item->coffees;
         }
         return view('index', ['data' => $data]);
+        // dd($data);
 
     }
 

@@ -10,4 +10,8 @@ class Category extends Model
     protected $fillable = [
         "title",
     ];
+
+    public function coffees(){
+        return $this->hasMany(Coffee::class);
+    }
 }
