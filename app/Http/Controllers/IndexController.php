@@ -15,8 +15,6 @@ class IndexController extends Controller
             $data[$item->title] = $item->coffees;
         }
         return view('index', ['data' => $data]);
-        // dd($data);
-
     }
 
     public function trash(){

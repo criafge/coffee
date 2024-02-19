@@ -16,8 +16,8 @@
                         <ul>
                             <li>
                                 <p>
-                                Номер вашего заказа: 1
-                            </p>
+                                    Номер вашего заказа: 1
+                                </p>
                             </li>
                             <li>
                                 <p> Латте на кокосовом - 130 ₽</p>
@@ -28,8 +28,8 @@
                             <br>
                             <li>
                                 <p>
-                                Общая сумма заказа - 230 ₽
-                            </p>
+                                    Общая сумма заказа - 230 ₽
+                                </p>
                             </li>
                             <li>
                                 <p>Заказ будет готов 31.01.2024 15:00</p>
@@ -56,28 +56,43 @@
 
         <div class="container2">
             <h3 class="h3">Редактирование профиля</h3>
-            <form>
+            <form action="{{ route('update-data') }}" method="post">
                 @csrf
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Имя</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        value="Илюшенька">
+                    <label for="name" class="form-label">Имя</label>
+                    <input type="text" class="form-control" name="name" value="{{ auth()->user()->name }}">
                     <div id="emailHelp" class="form-text">Это имя напишут на пакете, в котором выдадут заказ</div>
-
+                    @error('name')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ $message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Логин</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        value="Илюшенька">
+                    <label for="login" class="form-label">Логин</label>
+                    <input type="text" class="form-control" name="login" value="{{ auth()->user()->login }}">
+                    @error('login')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ $message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Номер телефона</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        value="8961 356 63 66">
+                    <label for="phone" class="form-label">Номер телефона</label>
+                    <input type="text" class="form-control phone" name="phone" value="{{ auth()->user()->phone }}">
+                    @error('phone')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ $message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @enderror
                 </div>
-                <button type="submit" class="btn btn-outline-dark">Сменить пароль</button>
+
+                <button class="btn btn-outline-dark">Сменить пароль</button>
                 {{-- модалка --}}
 
                 <button type="submit" class="btn btn-outline-dark">Сохранить изменения</button>
@@ -104,6 +119,9 @@
         </ul>
     </footer>
 
+    <script>
+        $(".phone").mask("+7(999)999-99-99");
+    </script>
 
     <style>
         footer {
