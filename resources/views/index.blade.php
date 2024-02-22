@@ -29,9 +29,8 @@
                             <li class="list-group-item">Категория: {{ $category }}</li>
                             <li class="list-group-item">Цена: {{ $coffee->cost }}</li>
                         </ul>
-                        <div class="card-body">
-                            <a href="#" class="card-link">В корзину</a>
-                            <a href="#" class="card-link">Перейти в каталог</a>
+                        <div class="card-body d-flex gap-3 align-items-center">
+                            <a href="{{route('coffee-page', $coffee->id)}}" class="btn btn-success">Подробнее</a>
                         </div>
                     </div>
                 @endforeach

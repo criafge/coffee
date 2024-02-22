@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 
 <head>
     <meta charset="utf-8">
@@ -34,7 +35,7 @@
             <div class="container">
 
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="img/fi-rr-coffee.png" alt="Logo" width="24" height="24"
+                    <img src="../img/fi-rr-coffee.png" alt="Logo" width="24" height="24"
                         class="d-inline-block align-text-top">
                     Кофейня
                 </a>
@@ -75,7 +76,7 @@
                         @else
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('trash') }}">
-                                    <img src="img/fi-rr-trash.png" alt="Logo" width="24" height="24"
+                                    <img src="../img/fi-rr-trash.png" alt="Logo" width="24" height="24"
                                         class="d-inline-block align-text-top">
                                     Корзина
                                 </a>

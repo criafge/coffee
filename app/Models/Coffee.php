@@ -8,12 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Coffee extends Model
 {
     protected $fillable = [
-        "title",
-        "description",
-        "cost",
-        "category_id",
-        "recept",
-        "photo",
+        "title", "description", "cost", "category_id", "recept", "photo",
     ];
 
     public function category(){

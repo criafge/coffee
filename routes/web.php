@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CoffeeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\user\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -8,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/coffee/{coffee}', [CoffeeController::class, 'showCoffee'])->name('coffee-page');
 
 Route::group(['middleware'=> 'auth'], function () {
     Route::group(['namespace'=> 'App\Http\Controllers\admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {
@@ -18,11 +21,12 @@ Route::group(['middleware'=> 'auth'], function () {
     });
     Route::group(['middleware' => 'user'], function(){
         Route::post('update/data', [UserController::class, 'updateData'])->name('update-data');
+        Route::resource('baskets', App\Http\Controllers\BasketController::class);
     });
 
 });
 
-
+Route::get('asd/{coffee}', [CoffeeController::class, 'asd']);
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
