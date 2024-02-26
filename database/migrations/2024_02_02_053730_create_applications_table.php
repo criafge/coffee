@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('status_id')->references('id')->on('statuses');
-            $table->foreignId('basket_id')->references('id')->on('baskets');
+            // $table->foreignId('basket_id')->references('id')->on('baskets');
             $table->text('comment')->nullable();
             $table->datetime('date_time');
             $table->decimal('cost');

@@ -46,7 +46,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('kabinet') }}">Личный кабинет</a>
+                    <a href="{{ route('home') }}">Личный кабинет</a>
                 </li>
 
                 <li>

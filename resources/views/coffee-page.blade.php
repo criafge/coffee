@@ -11,11 +11,12 @@
                     <h5 class="card-title">{{ $coffee->title }}</h5>
                     <p class="card-text">{{ $coffee->description }}</p>
                     <p class="card-text">{{ $coffee->cost }}</p>
-                    <p class="card-text">{{ $coffee->category_id }}</p>
-                    @if ($response === false)
+                    @if ($response === false && auth()->user())
                         <a href="" class="btn btn-success get-form-count">Добавить в корзину</a>
-                    @else
+                    @elseif($response === true)
                         <div>Товар уже добавлен в корзину</div>
+                    @else
+                        <div>Чтобы добавить товар в корзину необходима авторизация</div>
                     @endif
                     <form id="count-form" action="{{ route('baskets.store') }}" method="post" style="display: none">
                         @csrf
@@ -36,7 +37,7 @@
             </li>
 
             <li>
-                <a href="{{ route('kabinet') }}">Личный кабинет</a>
+                <a href="{{ route('home') }}">Личный кабинет</a>
             </li>
 
             <li>

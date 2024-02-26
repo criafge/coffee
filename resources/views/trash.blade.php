@@ -2,115 +2,101 @@
 
 @section('content')
     <div class="container d-flex justify-content-between">
-        <div class="container1">
-            <h3 class="h3">Ваш заказ</h3>
-            <p>
-                <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
-                    Показать корзину
-                </button>
-            </p>
-            <div style="min-height: 120px;">
-                <div class="collapse collapse-horizontal" id="collapseWidthExample">
-                    <div class="card card-body" style="width: 400px;">
-                        <ul>
-                            <li>
-                                <div class="container d-flex justify-content-between">
-                                    <div>
-                                        <p> Латте на кокосовом - 130 ₽</p>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="btn btn-success btn-sm">+</button>
-                                        <button type="button" class="btn btn-success btn-sm">-</button>
-                                    </div>
 
-                                </div>
-                            </li>
-                            <li>
-                                <div class="container d-flex justify-content-between">
-                                    <div>
-                                        <p> Классический тирамису - 100 ₽</p>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="btn btn-success btn-sm">+</button>
-                                        <button type="button" class="btn btn-success btn-sm">-</button>
-                                    </div>
+        @if ($exist === true)
+            <div class="container1">
+                <h3 class="h3">Ваш заказ</h3>
+                <p>
+                    <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                        Показать корзину
+                    </button>
+                <form action="{{ route('baskets.destroy', 1) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger btn-sm" style="height: 30px">Очистить корзину</button>
+                </form>
 
-                                </div>
-                            </li>
-                            <br>
-                            <li>
-                            <p>  Общая сумма заказа - 230 ₽</p>
-                            </li>
+                </p>
+                <div style="min-height: 120px;">
+                    <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                        <div class="card card-body" style="width: 400px;">
+                            <ul>
+                                @foreach ($coffees as $item)
+                                    <li>
+                                        <div class="container coffee">
+                                            <div>
+                                                <p>{{ $item['coffee']->title }}</p>
+                                                <p class="cost">{{ $item['coffee']->cost }}</p>
+                                            </div>
+                                            <div class="d-flex justify-content-left gap-3">
+                                                <button type="button" class="btn btn-success btn-sm decrement"
+                                                    style="height: 30px" data-id="{{ $item['coffee']->id }}">-</button>
+                                                <p class="count">{{ $item['count'] }}</p>
+                                                <button type="button" class="btn btn-success btn-sm increment"
+                                                    style="height: 30px" data-id="{{ $item['coffee']->id }}">+</button>
+                                                <a type="button" style="height: 30px"><img src="../img/fi-rr-trash.png"
+                                                        alt="Logo" width="24" height="24"
+                                                        class="d-inline-block align-text-top"></a>
+                                            </div>
 
-                            <li>
-                            <p>
-                                Внимание! Оплата производится
-                                наличными или по карте в кофейне по адресу Степана Кувыкина 130
-                            </p>
-                            </li>
-                        </ul>
+                                        </div>
+                                    </li>
+                                @endforeach
+                                <br>
+                                <li>
+                                    <p class="total"></p>
+                                </li>
+
+                                <li>
+                                    <p>
+                                        Внимание! Оплата производится
+                                        наличными или по карте в кофейне по адресу Степана Кувыкина 130
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <h3 class="h3">Активные заказы</h3>
-            <p>
-                <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseWidth" aria-expanded="false" aria-controls="collapseWidth">
-                    Показать активные заказы
-                </button>
-            </p>
-            <div style="min-height: 120px;">
-                <div class="collapse collapse-horizontal" id="collapseWidth">
-                    <div class="card card-body" style="width: 400px;">
-                        <ul>
-                            <li>
-                                <p>Номер вашего заказа - 1</p>
-                            </li>
-                            <li>
-                                <p> Латте на кокосовом - 130 ₽</p>
-                            </li>
-                            <li>
-                                <p> Классический тирамису - 100 ₽</p>
-                            </li>
-                            <br>
-                            <li>
-                               <p> Общая сумма заказа - 230 ₽</p>
-                            </li>
-
-                            <li>
-                                <p> Внимание! Оплата производится
-                                наличными или по карте в кофейне по адресу Степана Кувыкина 130
-                            </p>
-                            </li>
-                            <li>
-                                <button type="submit" class="btn btn-outline-dark">Отменить заказ</button>
-
-                            </li>
-
-                        </ul>
+            <div class="container2">
+                <h3 class="h3">Уточним детали</h3>
+                <form action="{{ route('applications.store') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="cost" value="" id="inputCost">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Укажите, к какому времени приготовить
+                            заказ - ваш заказ будет приготовлен не раньше, чем через 30 минут</label>
+                        <input type="time" class="form-control" name="date_time" id="time_input">
+                        @error('date_time')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}</div>
+                        @enderror
                     </div>
-                </div>
-            </div>
-        </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Комментарий к заказу</label>
+                        <textarea class="form-control" rows="3" name="comment"></textarea>
+                        @error('comment')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}</div>
+                        @enderror
+                    </div>
 
-        <div class="container2">
-            <h3 class="h3">Уточним детали</h3>
-            <form>
-                @csrf
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Укажите, к какому времени приготовить заказ</label>
-                    <input type="time" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Комментарий к заказу</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                
-                <button type="submit" class="btn btn-outline-dark">Заказать</button>
-            </form>
-        </div>
+                    <button type="submit" class="btn btn-outline-dark">Заказать</button>
+                </form>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show my-3" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            </div>
+        @else
+            <div>
+                Корзина пуста...
+            </div>
+        @endif
+
     </div>
 
     <footer>
@@ -123,7 +109,7 @@
             </li>
 
             <li>
-                <a href="{{ route('kabinet') }}">Личный кабинет</a>
+                <a href="{{ route('home') }}">Личный кабинет</a>
             </li>
 
             <li>
@@ -153,5 +139,100 @@
         li {
             list-style-type: none;
         }
+
+        .coffee {
+            border-bottom: 1px solid #6ba569;
+            margin-bottom: 30px;
+        }
     </style>
+
+    <script>
+        $(document).ready(function() {
+
+            // подсчет итоговой суммы заказа
+            let totalCost = 0;
+            const totalElement = $('.total');
+
+            $('.coffee').each(function() {
+                const count = parseInt($(this).find('.count').text());
+                const cost = parseFloat($(this).find('.cost').text());
+                totalCost += count * cost;
+            });
+
+            totalElement.text(`Общая сумма заказа - ${totalCost} ₽`);
+            $('#inputCost').val(totalCost);
+
+
+            // ограничение по времени на заказ
+
+            $('#time_input').on('change', function() {
+                var enteredTime = new Date($(this).val());
+                var thirtyMinutesLater = new Date();
+                thirtyMinutesLater.setMinutes(thirtyMinutesLater.getMinutes() + 30);
+
+                if (enteredTime < thirtyMinutesLater) {
+                    $(this).get(0).setCustomValidity(
+                        'Минимальное допустимое время — 30 минут позднее текущего.');
+                } else {
+                    $(this).get(0).setCustomValidity('');
+                }
+            });
+
+
+
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            // Устанавливаем заголовок X-CSRF-TOKEN для каждого AJAX-запроса
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+            $(document).on('click', '.increment', function() {
+                const id = $(this).data('id');
+                const currentCount = parseInt($(this).siblings('p').text());
+
+                $.ajax({
+                    url: '/update/basket',
+                    method: 'post',
+                    data: {
+                        coffee_id: id,
+                        count: currentCount + 1
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            $(`#${id}`).text(currentCount + 1);
+                        } else {
+                            console.log(response.message);
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', '.decrement', function() {
+                const id = $(this).data('id');
+                const currentCount = parseInt($(this).siblings('p').text());
+
+                if (currentCount > 0) {
+                    $.ajax({
+                        url: '/update/basket',
+                        method: 'POST',
+                        data: {
+                            coffee_id: id,
+                            count: currentCount - 1
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                $(`#${id}`).text(currentCount - 1);
+                            } else {
+                                console.log(response.message);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

@@ -48,4 +48,7 @@ class User extends Authenticatable
     public function basket(){
         return $this->hasOne(Basket::class);
     }
+    public function applications(){
+        return $this->hasMany(Application::class);
+    }
 }

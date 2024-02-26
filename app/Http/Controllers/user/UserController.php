@@ -13,4 +13,14 @@ class UserController extends Controller
         Auth::user()->update($request->validated());
         return redirect()->back()->with('success', 'Данные успешно изменены');
     }
+
+    public function changePass(Request $request){
+        $request->validated([
+            'password' => 'required'
+        ]);
+        Auth::user()->update([
+            'password' => $request->password
+        ]);
+        return redirect()->back()->with('success', 'Данные успешно изменены');
+    }
 }

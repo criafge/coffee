@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\barista\IndexController as BaristaIndexController;
+use App\Http\Controllers\barista\StatusController;
+use App\Http\Controllers\BasketController;
 use App\Http\Controllers\CoffeeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\user\UserController;
@@ -7,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
+
+Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -21,16 +26,16 @@ Route::group(['middleware'=> 'auth'], function () {
     });
     Route::group(['middleware' => 'user'], function(){
         Route::post('update/data', [UserController::class, 'updateData'])->name('update-data');
-        Route::resource('baskets', App\Http\Controllers\BasketController::class);
+        Route::resource('baskets', App\Http\Controllers\BasketController::class)->only('index', 'store', 'destroy');
+        Route::resource('applications', App\Http\Controllers\ApplicationController::class);
+        Route::post('update/basket', [BasketController::class, 'updateBasket']);
+        Route::post('change/pass', [UserController::class, 'changePass'])->name('change-pass');
+    });
+
+    Route::group(['middleware' => 'barista'], function(){
+        Route::get('/cabinet', BaristaIndexController::class);
+        Route::post('/change/status/{application}', [StatusController::class, 'changeStatus'])->name('change-status');
     });
 
 });
-
-Route::get('asd/{coffee}', [CoffeeController::class, 'asd']);
-
-Route::get('/', [IndexController::class, 'index'])->name('index');
-
-Route::get('trash', [IndexController::class, 'trash'])->name('trash');
-
-Route::get('kabinet', [IndexController::class, 'kabinet'])->name('kabinet');
 

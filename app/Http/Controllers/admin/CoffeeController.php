@@ -24,7 +24,7 @@ class CoffeeController extends Controller
 
         $coffee->create([
             'title' => $data['title_create'],
-            'description' => $data['title_create'],
+            'description' => $data['description_create'],
             'recept' => $data['recept_create'],
             'cost' => $data['cost_create'],
             'photo' => $filename,

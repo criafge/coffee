@@ -5,35 +5,83 @@
     <h3 class="h3" id="barista">Панель баристы</h3>
     <h5 id="coffee" class="pd-3">Активные заказы</h5>
     <div class="container d-flex justify-content-between">
-        <div class="container1 d-flex">
-            <div class="card" style="width: 20rem;">
-                <div class="card-body">
+
+
+
+        @if (count($applications) > 0)
+            <div class="container1 d-flex">
+                @foreach ($applications as $application)
                     <ul>
+                        @foreach (json_decode($application['order'], true) as $item)
+                            <div class="card" style="width: 20rem;">
+                                <div class="card-body">
+                                    <ul>
+                                        <li>
+                                            <p> {{ $item['title'] }} - {{ $item['cost'] }}₽ - {{ $item['count'] }}шт.</p>
+                                        </li>
+
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#{{ $item['id'] }}">Открыть рецепт</button>
+                                        {{-- модалка, предлагаю просто подряд все рецепты кофе выводить, похуй --}}
+                                        <div class="modal fade" id="{{ $item['id'] }}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                            {{ $item['title'] }}</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{ $item['recept'] }}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Закрыть</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <br>
                         <li>
                             <p>
-                            <h5 class="card-title">Заказ № 1</h5>
+                                Общая сумма заказа - {{ $application['cost'] }} ₽
                             </p>
                         </li>
                         <li>
-                            <p> Латте на кокосовом - 130 ₽</p>
+                            <p>{{ $application['status'] }}</p>
                         </li>
                         <li>
-                            <p> Классический тирамису - 100 ₽</p>
-                        </li>
-                        <li>
-                            <p> Общая сумма: 230 ₽</p>
-                        </li>
-                        <li>
-                            <p> Имя заказчика: Илюшенька</p>
+                            <p>Время сдачи {{ $application['date_time'] }}</p>
                         </li>
 
-                        <a href="#" class="card-link">Открыть рецепт</a>
+                        <br>
 
-                        {{-- модалка, предлагаю просто подряд все рецепты кофе выводить, похуй --}}
+                        @if ($application->status_id != 2)
+                            <li>
+                                <form action="{{ route('change-status', $application['id']) }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-sm">Готов</button>
+                                </form>
+                            </li>
+                        @endif
 
-                </div>
+                    </ul>
             </div>
-        </div>
+        @endforeach
 
+    </div>
+
+    </div>
+    </div>
+@else
+    <div>Активных заказов нет</div>
+    @endif
+    </div>
     </div>
 @endsection

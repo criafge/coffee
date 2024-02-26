@@ -4,54 +4,57 @@
     <div class="container d-flex justify-content-between">
         <div class="container1">
             <h3 class="h3">Активные заказы</h3>
-            <p>
-                <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidth"
-                    aria-expanded="false" aria-controls="collapseWidth">
-                    Показать активные заказы
-                </button>
-            </p>
-            <div style="min-height: 120px;">
-                <div class="collapse collapse-horizontal" id="collapseWidth">
-                    <div class="card card-body" style="width: 400px;">
-                        <ul>
-                            <li>
-                                <p>
-                                    Номер вашего заказа: 1
-                                </p>
-                            </li>
-                            <li>
-                                <p> Латте на кокосовом - 130 ₽</p>
-                            </li>
-                            <li>
-                                <p> Классический тирамису - 100 ₽</p>
-                            </li>
-                            <br>
-                            <li>
-                                <p>
-                                    Общая сумма заказа - 230 ₽
-                                </p>
-                            </li>
-                            <li>
-                                <p>Заказ будет готов 31.01.2024 15:00</p>
-                            </li>
-                            <li>
-                                <p>
-                                    Внимание! Оплата производится
-                                    наличными или по карте в кофейне по адресу Степана Кувыкина 130
-                                </p>
-                            </li>
-                            <br>
-                            <li>
-                                <button type="button" class="btn btn-success btn-sm">Отменить заказ</button>
+            @if (count($applications) > 0)
+                <p>
+                    <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseWidth" aria-expanded="false" aria-controls="collapseWidth">
+                        Показать активные заказы
+                    </button>
+                </p>
+                <div style="min-height: 120px;">
+                    <div class="collapse collapse-horizontal" id="collapseWidth">
+                        <div class="card card-body" style="width: 400px;">
+                            @foreach ($applications as $application)
+                                <ul>
 
-                            </li>
+                                    @foreach (json_decode($application['order'], true) as $item)
+                                        <li>
+                                            <p> {{ $item['title'] }} - {{ $item['cost'] }}₽ - {{ $item['count'] }}шт.</p>
+                                        </li>
+                                    @endforeach
 
-                        </ul>
+                                    <br>
+                                    <li>
+                                        <p>
+                                            Общая сумма заказа - {{ $application['cost'] }} ₽
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>{{ $application['status'] }}</p>
+                                    </li>
+                                    <li>
+                                        <p>Заказ будет готов в {{ $application['date_time'] }}</p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            Внимание! Оплата производится
+                                            наличными или по карте в кофейне по адресу Степана Кувыкина 130
+                                        </p>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        {{-- <button type="button" class="btn btn-success btn-sm">Отменить заказ</button> --}}
+                                    </li>
+                                </ul>
+                            @endforeach
+
+                        </div>
+
                     </div>
                 </div>
-            </div>
-
-
+            @else
+                <div>У вас нет заказов</div>
+            @endif
         </div>
 
         <div class="container2">
@@ -92,12 +95,13 @@
                     @enderror
                 </div>
 
-                <button class="btn btn-outline-dark">Сменить пароль</button>
-                {{-- модалка --}}
-
+                <button type="button" class="btn-outline-dark" data-bs-toggle="modal" data-bs-target="#password">Сменить
+                    пароль</button>
                 <button type="submit" class="btn btn-outline-dark">Сохранить изменения</button>
             </form>
         </div>
+
+    </div>
 
     </div>
     <footer>
@@ -110,7 +114,7 @@
             </li>
 
             <li>
-                <a href="{{ route('kabinet') }}">Личный кабинет</a>
+                <a href="{{ route('home') }}">Личный кабинет</a>
             </li>
 
             <li>
@@ -118,6 +122,29 @@
             </li>
         </ul>
     </footer>
+    <div class="modal fade" id="password" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="{{ route('change-pass') }}" method="POST">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Сменить пароль</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Введите новый пароль</label>
+                        <input type="password" name="password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Сохранить</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 
     <script>
         $(".phone").mask("+7(999)999-99-99");
